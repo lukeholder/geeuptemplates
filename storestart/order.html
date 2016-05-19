@@ -1,4 +1,4 @@
-{% extends 'store2/_layout' %}
+{% extends 'storefinal/_layout' %}
 
 {% block body %}
 
@@ -10,7 +10,7 @@
 			Thank you for your order #{{ order.id }} for {{ order.totalPrice|currency(order.currency) }}
 			<a href="/store">Back to Store</a>
 		{% else %}
-			{% redirect 'store2' %}
+			{% redirect 'storefinal' %}
 		{% endif %}
 	</div>
 
