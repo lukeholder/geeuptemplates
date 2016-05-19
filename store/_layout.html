@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>Our Merch</title>
+
+	{#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">#}
+	<link rel="stylesheet" href="/store/style.css">
+
+</head>
+<body>
+
+{% set cart = craft.commerce.cart %}
+
+<div class="container">
+	<div class="page-header">
+		<h1>Our Merch</h1>
+	</div>
+</div>
+
+<div id="notice" class="container {% if not craft.session.getFlash('notice',null,false) %}hidden{% endif %}">
+	<div class="alert alert-info" role="alert"><strong>{{ craft.session.getFlash('notice',null,false) ?? '' }}</strong></div>
+</div>
+<div id="error" class="container {% if not craft.session.getFlash('error',null,false) %}hidden{% endif %}">
+	<div class="alert alert-danger" role="alert"><strong>{{ craft.session.getFlash('error',null,false) ?? '' }}</strong></div>
+</div>
+
+<div id="errors" class="container">
+	{% for key, error in cart.allErrors %}
+		{% if loop.first %}<div class="alert alert-danger" role="alert"><ul>{% endif %}
+		<li>{{ error }}</li>
+		{% if loop.last %}</ul></div>{% endif %}
+	{% endfor %}
+</div>
+
+{% block body %}
+	<p>Blank page.</p>
+{% endblock %}
+
+<footer class="footer">
+	<div class="container">
+		<p class="text-muted">&copy; Our Merch. 2016.</p>
+	</div>
+</footer>
+
+{#<script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>#}
+{#<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>#}
+<script src="/store/script.js"></script>
+
+<script>
+
+	$(function () {
+
+		$('[data-formsubmit]').click(function(e){
+			e.preventDefault();
+			$(this).closest('form').submit();
+		});
+
+		var initialEmail = '{{ cart.email }}';
+		$('[name="email"]').blur(function(e){
+			e.preventDefault();
+			if(initialEmail != $(this).val()) {
+				$(this).closest('form').submit();
+			}
+		});
+
+		setTimeout(function() {
+			$('#notice,#error,#errors').slideUp();
+		}, 5000 );
+	});
+
+</script>
+
+</body>
+</html>

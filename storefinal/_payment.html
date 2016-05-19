@@ -1,0 +1,87 @@
+<div id="payment" class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Payment</h3>
+		</div>
+		<div class="panel-body">
+			<form class="form-horizontal" method="post" role="form">
+				<input type="hidden" name="action" value="commerce/payments/pay"/>
+				<input type="hidden" name="redirect" value="store2/order?orderNumber={number}"/>
+				<input type="hidden" name="cancelUrl" value="store2"/>
+
+				{% for key, error in (paymentForm.allErrors ?? []) %}
+					{% if loop.first %}<div class="alert alert-danger" role="alert"><ul>{% endif %}
+					<li>{{ error }}</li>
+					{% if loop.last %}</ul></div>{% endif %}
+				{% endfor %}
+
+				<fieldset>
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="firstName">First Name</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" name="firstName" id="firstName" placeholder="Card Holder's First Name">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="lastName">Last Name</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" name="lastName" id="lastName" placeholder="Card Holder's Last Name">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="number">Card Number</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" name="number" id="number" placeholder="Debit/Credit Card Number">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="month">Expiration Date</label>
+						<div class="col-sm-9">
+							<div class="row">
+								<div class="col-xs-3">
+									<select class="form-control col-sm-2" name="month" id="month">
+										<option>Month</option>
+										<option value="01" selected>Jan (01)</option>
+										<option value="02">Feb (02)</option>
+										<option value="03">Mar (03)</option>
+										<option value="04">Apr (04)</option>
+										<option value="05">May (05)</option>
+										<option value="06">June (06)</option>
+										<option value="07">July (07)</option>
+										<option value="08">Aug (08)</option>
+										<option value="09">Sep (09)</option>
+										<option value="10">Oct (10)</option>
+										<option value="11">Nov (11)</option>
+										<option value="12">Dec (12)</option>
+									</select>
+								</div>
+								<div class="col-xs-3">
+									<select class="form-control" name="year">
+										<option value="2017">2017</option>
+										<option value="2018">2018</option>
+										<option value="2019">2019</option>
+										<option value="2020">2020</option>
+										<option value="2021">2021</option>
+										<option value="2022">2022</option>
+										<option value="2023">2023</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="cvv">Card CVV</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" name="cvv" id="cvv" placeholder="Security Code">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-9">
+							<button type="button" data-formsubmit class="btn btn-success">Pay Now {{ cart.totalPrice|currency(cart.currency) }}</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>

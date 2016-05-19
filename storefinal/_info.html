@@ -1,0 +1,22 @@
+<div id="info" class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading"><h3 class="panel-title">Info</h3></div>
+		<form method="post">
+			<input type="hidden" name="action" value="commerce/cart/updateCart"/>
+			<input type="hidden" name="redirect" value="store"/>
+
+			<div class="panel-body">
+				<div class="form-group {% if cart.getErrors('email') %}has-error{% endif %}">
+					<input type="text" class="form-control" name="email" id="email" value="{{ cart.email }}" placeholder="me@email.com">
+				</div>
+
+				{% if not cart.email %}
+					<button type="button" data-formsubmit class="btn btn-success">Continue</button>
+				{% endif %}
+			</div>
+
+
+
+		</form>
+	</div>
+</div>

@@ -1,0 +1,31 @@
+{% extends 'store/_layout' %}
+
+{% block body %}
+
+	{# Products #}
+	{% include 'store/_products' %}
+
+
+	{% if cart.lineItems|length %}
+
+		{# Cart #}
+		{% include "store/_cart" %}
+
+		{# Info #}
+		{% include "store/_info" %}
+
+	{% endif %}
+
+	{# Addresses #}
+	{#<div id="addresses" class="container">#}
+	{#{% include "store/_address" %}#}
+	{#{% include "store/_address" %}#}
+	{#</div>#}
+
+	{# Payment #}
+	{#{% if cart.billingAddress and cart.shippingAddress and cart.lineItems|length and cart.email %}#}
+	{% if cart.lineItems|length and cart.email %}
+		{% include "store/_payment" %}
+	{% endif %}
+
+{% endblock %}
