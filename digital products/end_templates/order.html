@@ -1,0 +1,38 @@
+{% extends 'store/_layout' %}
+
+{% block body %}
+
+	{% set orderNumber = craft.request.getParam('number') %}
+	{% set order = craft.commerce.orders.number(orderNumber).first() %}
+
+	<div class="container">
+		{% if order %}
+			<p>Thank you for your order #{{ order.id }} for {{ order.totalPrice|currency(order.currency) }}</p>
+
+			{% set licenses = craft.digitalProducts.licenses.orderId(order.id).with(['product']) %}
+
+			{% if licenses %}
+				Your order contained the following licenses:
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th width="30%">Product</th>
+							<th>License key</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for license in licenses %}
+							<tr>
+								<td>{{ license.product.title }}</td>
+								<td style="word-break: break-all">{{ license.licenseKey }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% endif %}
+			<a href="/store">Back to Store</a>
+		{% else %}
+			{% redirect 'store' %}
+		{% endif %}
+	</div>
+{% endblock %}

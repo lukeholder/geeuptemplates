@@ -1,0 +1,24 @@
+<div class="container">
+	<div class="row">
+		{% for product in products %}
+			<div class="digitalProduct col-sm-6 col-md-4">
+				<div class="thumbnail">
+					{% set image = product.bookCover.first() %}
+					{% set imageUrl = image is defined ? image.getUrl({width: 171, height: 300}) : "holder.js/171x300?bg=9045BE&text=" ~ product.price|currency(cart.currency) %}
+					<a href="#"><img class="img-thumbnail" src="{{ imageUrl }}"></a>
+					<div class="caption">
+						<h5>{{ product.title }}</h5>
+						<p>{{ product.price|currency(cart.currency) }}</p>
+
+						<form method="post">
+							<input type="hidden" name="action" value="commerce/cart/updateCart" />
+							<input type="hidden" name="redirect" value="store" />
+							<input type="hidden" name="purchasableId" value="{{ product.purchasableId }}" />
+							<p><a data-formsubmit href="#" class="btn btn-primary" role="button">Add to cart</a></p>
+						</form>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>

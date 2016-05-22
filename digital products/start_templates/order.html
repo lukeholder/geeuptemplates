@@ -1,0 +1,34 @@
+{% extends 'store/_layout' %}
+
+{% block body %}
+
+	{% set orderNumber = craft.request.getParam('number') %}
+	{% set order = craft.commerce.orders.number(orderNumber).first() %}
+
+	<div class="container">
+		{% if order %}
+			<p>Thank you for your order #{{ order.id }} for {{ order.totalPrice|currency(order.currency) }}</p>
+
+			{# Select by order ID. Eager-load the Product. #}
+			{% set licenses = null %}
+
+			{% if licenses %}
+				Your order contained the following licenses:
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th width="30%">Product</th>
+							<th>License key</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			{% endif %}
+			<a href="/store">Back to Store</a>
+		{% else %}
+			{% redirect 'store' %}
+		{% endif %}
+	</div>
+
+{% endblock %}

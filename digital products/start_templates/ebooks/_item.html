@@ -1,0 +1,62 @@
+{% extends 'store/_layout' %}
+
+{% block body %}
+	<div class="container">
+		<h2>{{ product.title }}</h2>
+		<div class="row">
+			<div class="col-md-4">
+				{% set image = product.bookCover.first() %}
+				{% set imageUrl = image is defined ? image.getUrl({width: 171, height: 300}) : "holder.js/171x300?bg=9045BE&text=" ~ product.price|currency(cart.currency) %}
+				<img class="img-thumbnail" src="{{ imageUrl }}">
+				<div class="caption">
+					<br />
+					<p class="text-danger">Buy now for {{ product.price|currency(cart.currency) }}!</p>
+
+					<form method="post">
+						<input type="hidden" name="action" value="commerce/cart/updateCart" />
+						<input type="hidden" name="redirect" value="store" />
+						<input type="hidden" name="purchasableId" value="{{ product.purchasableId }}" />
+						<p><a data-formsubmit href="#" class="btn btn-primary" role="button">Add to cart</a></p>
+					</form>
+
+				</div>
+			</div>
+			<div class="col-md-8">
+				{{ product.about }}
+			</div>
+		</div>
+
+		{% if product.reviews|length %}
+			<h3>Reviews</h3>
+			{% for block in product.reviews.type('review') %}
+				<div class="row">
+					<div class="col-md-12">
+						<p>{{ block.review }}</p>
+						<p><em>{{ block.reviewAuthor }}</em></p>
+					</div>
+				</div>
+				{% if not loop.last %}
+					<hr />
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+
+		{% if product.relatedBooks|length %}
+				<h3>Related books</h3>
+				{% for relatedBook in product.relatedBooks %}
+					<div class="row">
+						<div class="col-md-2">
+							{% set image = relatedBook.bookCover.first() %}
+							{% set imageUrl = image is defined ? image.getUrl({width: 60, height: 100}) : "holder.js/60x100?bg=9045BE" ~ product.price|currency(cart.currency) %}
+							<a href="{{ relatedBook.url() }}"><img class="img-thumbnail" src="{{ imageUrl }}"></a>
+						</div>
+						<p class="text-info">{{ relatedBook.title }}</p>
+						<p class="text-danger">{{ product.price|currency(cart.currency) }}</p>
+					</div>
+					{% if not loop.last %}
+						<hr />
+					{% endif %}
+				{% endfor %}
+		{% endif %}
+	</div>
+{% endblock %}

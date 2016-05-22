@@ -1,0 +1,2 @@
+{% set products = craft.digitalProducts.products({type: 'ebooks'}).order('price desc').with(['isLicensed']) %}
+{% include 'store/ebooks/_list' with {'products': products} %}

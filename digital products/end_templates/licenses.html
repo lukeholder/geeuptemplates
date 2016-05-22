@@ -1,0 +1,48 @@
+{% extends 'store/_layout' %}
+
+{% block body %}
+	<div class="container">
+		{% if currentUser %}
+			{% set licenses = craft.digitalProducts.licenses.user(currentUser).order("dateCreated desc").with(['product', 'order']) %}
+
+			<div class="panel panel-default">
+			<div class="panel-heading"><h3 class="panel-title">Licenses</h3></div>
+			{% if licenses %}
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Licensed product</th>
+							<th>Download links</th>
+							<th>License date</th>
+							<th>Order</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for license in licenses %}
+						<tr>
+							<td><a href="{{ license.product.getUrl() }}">{{ license.product.title }}</a></td>
+							<td>
+								{% if license.product.download|length %}
+									<ul class="list">
+									{% for download in license.product.download %}
+										<li><a href="{{ download.getUrl() }}">{{ download.title }}</a></li>
+									{% endfor %}
+									</ul>
+								{% endif %}
+							</td>
+							<td>{{ license.dateCreated|date('Y-m-d H:i:s') }}</td>
+							<td>
+								{% if license.orderId %}
+									<a href="/store/order?number={{ license.order.number }}">Order no. {{ license.orderId }}</a>
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			{% endif %}
+		{% else %}
+			<p>Please log in first</p>
+		{% endif %}
+	</div>
+{% endblock %}
