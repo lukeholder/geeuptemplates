@@ -22,6 +22,26 @@
 						</tr>
 					</thead>
 					<tbody>
+					{% for license in licenses %}
+						<tr>
+							<td><a href="{{ license.product.getUrl() }}">{{ license.product.title }}</a></td>
+							<td>
+								{% if license.product.download|length %}
+									<ul class="list">
+									{% for download in license.product.download %}
+										<li><a href="{{ download.getUrl() }}">{{ download.title }}</a></li>
+									{% endfor %}
+									</ul>
+								{% endif %}
+							</td>
+							<td>{{ license.dateCreated|date('Y-m-d H:i:s') }}</td>
+							<td>
+								{% if license.orderId %}
+									<a href="/store/order?number={{ license.order.number }}">Order no. {{ license.orderId }}</a>
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
 					</tbody>
 				</table>
 			{% endif %}
