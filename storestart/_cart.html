@@ -1,46 +1,43 @@
 <div id="cart" class="container">
 	<div class="panel panel-default">
 		<div class="panel-heading"><h3 class="panel-title">Cart</h3></div>
+
 		<table class="table">
 			<tbody>
-			{% for item in cart.lineItems %}
-			<tr>
-				<td>
-					<form method="post">
-						<input type="hidden" name="action" value="commerce/cart/updateLineItem"/>
-						<input type="hidden" name="redirect" value="storefinal"/>
-						<input type="hidden" name="lineItemId" value="{{ item.id }}"/>
-						<input type="hidden" name="qty" value="{{ item.qty - 1 }}"/>
-					<a href="#" class="btn btn-primary btn-xs" data-formsubmit><strong>&minus;</strong></a>
-					</form>
-					{{ item.qty }}
-					<form method="post">
-						<input type="hidden" name="action" value="commerce/cart/updateLineItem"/>
-						<input type="hidden" name="redirect" value="storefinal"/>
-						<input type="hidden" name="lineItemId" value="{{ item.id }}"/>
-						<input type="hidden" name="qty" value="{{ item.qty + 1 }}"/>
-					<a href="#" class="btn btn-primary btn-xs" data-formsubmit><strong>&plus;</strong></a>
-					</form>
-					{{ item.purchasable.title }}
-					<form method="post">
-						<input type="hidden" name="action" value="commerce/cart/removeLineItem"/>
-						<input type="hidden" name="redirect" value="storefinal"/>
-						<input type="hidden" name="lineItemId" value="{{ item.id }}"/>
-					<a href="#" data-formsubmit>Remove</a>
-					</form>
-				</td>
-				<td>{{ item.total|currency(cart.currency) }}</td>
-			</tr>
-			{% endfor %}
-			{% for adjustment in cart.adjustments %}
-			<tr>
-				<td>{{ adjustment.name }}</td>
-				<td>{{ adjustment.amount }}</td>
-			</tr>
-			{% endfor %}
+
+				<tr>
+					<td>
+						<form method="post">
+							<input type="hidden" name="action" value="commerce/cart/updateLineItem"/>
+							<input type="hidden" name="lineItemId" value=""/>
+							<input type="hidden" name="qty" value=""/>
+							<a href="#" class="btn btn-primary btn-xs" data-formsubmit><strong>&minus;</strong></a>
+						</form>
+						5
+						<form method="post">
+							<input type="hidden" name="action" value="commerce/cart/updateLineItem"/>
+							<input type="hidden" name="lineItemId" value=""/>
+							<input type="hidden" name="qty" value=""/>
+							<a href="#" class="btn btn-primary btn-xs" data-formsubmit><strong>&plus;</strong></a>
+						</form>
+						My product
+						<form method="post">
+							<input type="hidden" name="action" value="commerce/cart/removeLineItem"/>
+							<input type="hidden" name="lineItemId" value=""/>
+							<a href="#" data-formsubmit>Remove</a>
+						</form>
+					</td>
+					<td>$10</td>
+				</tr>
+
+				<tr>
+					<td>Shipping</td>
+					<td>$10</td>
+				</tr>
+
 			<tr>
 				<td><strong>Total: </strong></td>
-				<td>{{ cart.totalPrice|currency(cart.currency) }}</td>
+				<td></td>
 			</tr>
 			</tbody>
 		</table>

@@ -1,14 +1,5 @@
-{% extends 'storefinal/_layout' %}
+{% extends 'store/_layout' %}
 
 {% block body %}
-	{% include 'storefinal/_products' %}
-
-	{% if cart.lineItems|length %}
-		{% include 'storefinal/_cart' %}
-
-		{% include 'storefinal/_info' %}
-
-		{% include 'storefinal/_payment' %}
-	{% endif %}
 
 {% endblock %}

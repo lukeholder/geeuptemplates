@@ -7,16 +7,12 @@
 
 			<div class="panel-body">
 				<div class="form-group {% if cart.getErrors('email') %}has-error{% endif %}">
-					<input type="text" class="form-control" name="email" id="email" value="{{ cart.email }}" placeholder="me@email.com">
+					<input type="text" class="form-control" name="email" id="email" value="{{ cart.email }}" placeholder="me@email.com" {% if currentUser %}disabled{% endif %}>
 				</div>
-
 				{% if not cart.email %}
 					<button type="button" data-formsubmit class="btn btn-success">Continue</button>
 				{% endif %}
 			</div>
-
-
-
 		</form>
 	</div>
 </div>

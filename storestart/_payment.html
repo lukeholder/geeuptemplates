@@ -6,8 +6,8 @@
 		<div class="panel-body">
 			<form class="form-horizontal" method="post" role="form">
 				<input type="hidden" name="action" value="commerce/payments/pay"/>
-				<input type="hidden" name="redirect" value="storefinal/order?orderNumber={number}"/>
-				<input type="hidden" name="cancelUrl" value="storefinal"/>
+				<input type="hidden" name="redirect" value="store/order?number={number}"/>
+				<input type="hidden" name="cancelUrl" value="store"/>
 
 				{% for key, error in (paymentForm.allErrors ?? []) %}
 					{% if loop.first %}<div class="alert alert-danger" role="alert"><ul>{% endif %}
