@@ -5,7 +5,7 @@
 				<div class="thumbnail">
 					{% set image = product.bookCover.first() %}
 					{% set imageUrl = image is defined ? image.getUrl({width: 171, height: 300}) : "holder.js/171x300?bg=9045BE&text=" ~ product.price|currency(cart.currency) %}
-					<a href="{{ product.url() }}"><img class="img-thumbnail" src="{{ imageUrl }}"></a>
+					<a href="#"><img class="img-thumbnail" src="{{ imageUrl }}"></a>
 					<div class="caption">
 						<h5>{{ product.title }}</h5>
 						<p>{{ product.price|currency(cart.currency) }}</p>
