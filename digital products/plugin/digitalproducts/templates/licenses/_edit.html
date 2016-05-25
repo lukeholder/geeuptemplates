@@ -1,0 +1,84 @@
+{% extends "_layouts/cp" %}
+{% hook 'digitalProducts.prepCpTemplate' %}
+{% set selectedSubnavItem = "licenses" %}
+
+{% set fullPageForm = true %}
+
+{% import "_includes/forms" as forms %}
+
+{% set statusOptions = [{label: 'Active'|t, value: 1}, {label: 'Disabled'|t, value: 0}] %}
+
+{% block content %}
+	<input type="hidden" name="action" value="digitalProducts/licenses/save">
+	<input type="hidden" name="redirect" value="digitalproducts/licenses">
+	{% if license.id %}<input type="hidden" name="licenseId" value="{{ license.id }}">{% endif %}
+
+	<div id="license-fields">
+		{{ forms.elementSelectField({
+			elementType: productElementType,
+			elements: license.productId ? craft.digitalProducts.products.id(license.productId).find() : null,
+			instructions: "The digital product that this license should be associated with"|t,
+			label: "Product"|t,
+			id: 'product',
+			errors: license.getErrors('productId'),
+			class: 'ltr',
+			name: 'product',
+			limit: 1
+		}) }}
+
+
+		{{ forms.textAreaField({
+			label: "License key"|t,
+			instructions: "The license key is generated automatically"|t,
+			id: 'licenseKey',
+			class: 'code',
+			name: 'licenseKey',
+			disabled: true,
+			value: license.licenseKey,
+		}) }}
+
+		{{ forms.selectField({
+			label: "Status"|t,
+			id: 'status',
+			class: 'ltr',
+			name: 'enabled',
+			value: license.enabled,
+			options: statusOptions,
+			errors: license.getErrors('skuFormat')
+		}) }}
+
+		{{ forms.elementSelectField({
+			elementType: userElementType,
+			elements: license.userId ? craft.users.id(license.userId).find() : null,
+			label: "Owner"|t,
+			id: 'owner',
+			class: 'ltr',
+			name: 'owner',
+			limit: 1,
+			errors: license.getErrors('userId'),
+			required: true,
+			instructions: "Required, if Owner Email field is blank."|t
+		}) }}
+
+		{{ forms.textField({
+			label: "Owner Name"|t,
+			id: 'ownerName',
+			class: 'ltr',
+			name: 'ownerName',
+			value: license.ownerName,
+			errors: license.getErrors('ownerName')
+		}) }}
+
+		{{ forms.textField({
+			label: "Owner Email"|t,
+			id: 'ownerEmail',
+			class: 'ltr',
+			name: 'ownerEmail',
+			value: license.ownerEmail,
+			errors: license.getErrors('ownerEmail'),
+			required: true,
+			instructions: "Required, if Owner field is blank."|t,
+		}) }}
+	</div>
+
+{% endblock %}
