@@ -1,4 +1,8 @@
-{% set products = craft.commerce.products %}
+{% set products = craft.commerce.products({
+	hasVariant: {
+	 hasStock : true
+	}
+}) %}
 
 <div class="container">
 	<div class="row">
@@ -12,7 +16,7 @@
 			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
 					{%  set color = product.type.hasVariants ? variant.color[1:7] : product.color[1:7] %}
-					<a data-formsubmit href="#"><img class="img-rounded" src="holder.js/171x180?&outline=no&text={{ variant.salePrice|currency(cart.currency) }}"></a>
+					<a data-formsubmit href="#"><img class="img-rounded" src="holder.js/171x180?&bg={{color ?: '6F377D' }}&outline=no&text={{ variant.salePrice|currency(cart.currency) }}"></a>
 					<div class="caption">
 						<h5>{{ variant.title }} - {{ variant.product.type.name }}</h5>
 						<p><a data-formsubmit href="#" class="btn btn-primary" role="button">Add {{ variant.salePrice|currency(cart.currency) }}</a></p>
