@@ -1,0 +1,41 @@
+{% extends 'store/_layout' %}
+
+{% block body %}
+	<div class="container">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">License claim</h3>
+			</div>
+			<div class="panel-body">
+				{% if currentUser %}
+					<form class="form-horizontal" method="post" role="form">
+						<input type="hidden" name="action" value="licenseClaimer/claim">
+						<input type="hidden" name="redirect" value="/store/claim">
+
+						<fieldset>
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="licenseEmail">E-mail</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" name="licenseEmail" id="licenseEmail" placeholder="E-mail assigned to license">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="licenseKey">Last Name</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" name="licenseKey" id="licenseKey" placeholder="License key">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-9">
+									<input type="submit" class="btn btn-success" value="Claim license"/>
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				{% else %}
+					<p>Please log in first</p>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
