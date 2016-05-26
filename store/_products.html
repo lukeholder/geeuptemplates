@@ -1,4 +1,8 @@
-{% set products = craft.commerce.products %}
+{% set products = craft.commerce.products({
+	hasVariant: {
+	 hasStock : true
+	}
+}) %}
 
 <div class="container">
 	<div class="row">
